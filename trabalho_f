@@ -1,6 +1,6 @@
 import random
 import string
-import time  # para os timers
+import time  
 
 # ================= ESTILO =================
 def cor(texto, codigo):
@@ -265,6 +265,12 @@ def selecionar_produtos():
     if "Recebe" not in pessoa["status"]:
         erro("Essa pessoa não tem direito a receber cesta básica!")
         return
+
+    # --- NOVA VERIFICAÇÃO: impede repetição ---
+    if pessoa["cesta"] and any(pessoa["cesta"].values()):
+        erro(f"{pessoa['nome']} já selecionou os produtos! Cada pessoa pode selecionar apenas uma vez.")
+        return
+    # -----------------------------------------
 
     if not verificar_ponto(pessoa):
         return
